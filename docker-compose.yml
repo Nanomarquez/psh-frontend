@@ -1,0 +1,23 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: psh_game
+    ports:
+      - "5432:5432"
+  app:
+    build: ./psh-game-backend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://user:password@db:5432/psh_game
+  frontend:
+    build: ./psh-game-frontend
+    ports:
+      - "3000:3000"
