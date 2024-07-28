@@ -9,11 +9,19 @@ export interface Stat {
   score: number;
 }
 
+interface ToastState {
+  type: 'success' | 'error' | null;
+  text: string;
+  show: boolean;
+}
+
 interface StatState {
   topScores: Stat[];
   totalCount: number;
   lastUpdate: string | null;
   isLoading: boolean;
+  toast: ToastState;
+  repeatedIds: number[];
 }
 
 const initialState: StatState = {
@@ -21,6 +29,12 @@ const initialState: StatState = {
   totalCount: 0,
   lastUpdate: null,
   isLoading: false,
+  toast: {
+    type: null,
+    text: '',
+    show: false
+  },
+  repeatedIds: [],
 };
 
 const statSlice = createSlice({
@@ -40,8 +54,17 @@ const statSlice = createSlice({
     setLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
+    setToast(state, action: PayloadAction<ToastState>) {
+      state.toast = action.payload;
+    },
+    resetToast(state) {
+      state.toast = initialState.toast;
+    },
+    setRepeatedIds(state, action: PayloadAction<number[]>) {
+      state.repeatedIds = action.payload;
+    },
   },
 });
 
-export const { setTopScores, setLastUpdate , fetchTopScoresAction , setLoading , setTotalCount } = statSlice.actions;
+export const { setTopScores, setLastUpdate , fetchTopScoresAction , setLoading , setTotalCount , setToast , resetToast , setRepeatedIds } = statSlice.actions;
 export default statSlice.reducer;
