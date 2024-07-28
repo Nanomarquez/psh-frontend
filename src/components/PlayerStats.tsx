@@ -25,14 +25,14 @@ const PlayerStats: React.FC = () => {
   return (
     <>
       {topScores?.length === 0 ? (
-        <div className="text-center text-4xl font-bold p-5 bg-slate-100/80 rounded-lg shadow-lg text-blue-400 pb-6">No players found</div>
+        <div className="text-center text-4xl font-bold p-5 bg-slate-100/80 rounded-lg shadow-lg text-blue-400 pb-6 select-none">No players found</div>
       ) : (
-        <div className="w-[305px] md:w-[600px] p-4 bg-slate-100/80 rounded-lg shadow-lg">
+        <div className="w-[360px] md:w-[600px] p-4 bg-slate-100/80 rounded-lg shadow-lg select-none">
           <h2 className="text-3xl text-center font-extrabold text-blue-400">
             Top 10 Players
           </h2>
-          <table className="table-auto w-full mt-4">
-            <thead>
+          <table className="table-auto w-full mt-4 bg-white rounded-md shadow-md overflow-hidden">
+            <thead className="bg-blue-400 overflow-hidden text-white">
               <tr>
                 <th className="px-4 py-2">Rank</th>
                 <th className="px-4 py-2">Nickname</th>
@@ -51,7 +51,7 @@ const PlayerStats: React.FC = () => {
               ))}
             </tbody>
           </table>
-          <div className="flex justify-between">
+          <div className="flex justify-between flex-col sm:flex-row">
             <div className="mt-2 bg-blue-400 p-2 shadow-md rounded-lg text-white font-bold w-fit">
               Last updated:{" "}
               {lastUpdate ? new Date(lastUpdate).toLocaleString() : "N/A"}
