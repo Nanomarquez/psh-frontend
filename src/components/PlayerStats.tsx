@@ -42,7 +42,7 @@ const PlayerStats: React.FC = () => {
             <tbody>
               {topScores?.map((player: any, index: number) => (
                 <tr key={player.id} 
-                className={repeatedIds.includes(player.id.toString()) ? '' : 'bg-green-500'}
+                className={repeatedIds.includes(player.id.toString()) ? '' : 'bg-green-200'}
                 >
                   <td className="border px-4 py-2">{index + 1}</td>
                   <td className="border px-4 py-2">{player.nickname}</td>

@@ -20,24 +20,24 @@ export const Spinner = ({
 }>) => {
   const isLoading = useSelector((state: RootState) => state.stats.isLoading);
 
-  const [showSpinner, setShowSpinner] = useState(false);
+  // const [showSpinner, setShowSpinner] = useState(false);
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
+  // useEffect(() => {
+  //   let timer: NodeJS.Timeout;
 
-    if (isLoading) {
-      setShowSpinner(true);
-    } else {
-      timer = setTimeout(() => {
-        setShowSpinner(false);
-      }, 500);
-    }
+  //   if (isLoading) {
+  //     setShowSpinner(true);
+  //   } else {
+  //     timer = setTimeout(() => {
+  //       setShowSpinner(false);
+  //     }, 500);
+  //   }
     
-    return () => clearTimeout(timer);
-  }, [isLoading]);
+  //   return () => clearTimeout(timer);
+  // }, [isLoading]);
 
   return (
-    <Backdrop open={showSpinner} sx={{ zIndex: 99 }}>
+    <Backdrop open={isLoading} sx={{ zIndex: 99 }}>
       <CircularProgress color={color} size={size} />
     </Backdrop>
   );
