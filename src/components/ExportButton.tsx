@@ -7,12 +7,14 @@ const ExportButton: React.FC = () => {
   const topScores = useSelector((state: RootState) => state.stats.topScores);
 
   const handleExport = () => {
-    const csvContent =
+    let csvContent =
       "data:text/csv;charset=utf-8," +
       [
-        "Nickname,Score",
-        ...topScores.map((p: any) => `${p.nickname},${p.score}`),
-      ].join("\n");
+        "Rank;Nickname;Score",
+        ...topScores.map((p: any,index: number) => `${index + 1};${p.nickname};${p.score}`),
+      ].join("\r\n");
+      csvContent = csvContent.concat("\r\n\r\nLast updated:;;", new Date().toLocaleString());
+      console.log(csvContent);
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
