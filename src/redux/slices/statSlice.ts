@@ -5,7 +5,7 @@ export interface Stat {
   playerId: number;
   nickname: string;
   profileImage: string;
-  createdAt: string;
+  createdAt: Date;
   score: number;
 }
 
@@ -15,13 +15,13 @@ interface ToastState {
   show: boolean;
 }
 
-interface StatState {
+export interface StatState {
   topScores: Stat[];
   totalCount: number;
   lastUpdate: string | null;
   isLoading: boolean;
   toast: ToastState;
-  repeatedIds: number[];
+  repeatedIds: string[];
 }
 
 const initialState: StatState = {

@@ -5,10 +5,11 @@ import { RootState, AppDispatch } from "../redux/store";
 import { fetchTopScoresAction } from "../redux/slices/statSlice";
 import ExportButton from "./ExportButton";
 import FetchButton from "./FetchButton";
+import { Stat } from "@prisma/client";
 
 const PlayerStats: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { topScores, lastUpdate, totalCount , repeatedIds } = useSelector(
+  const { topScores, lastUpdate, totalCount, repeatedIds } = useSelector(
     (state: RootState) => state.stats
   );
 
@@ -22,10 +23,24 @@ const PlayerStats: React.FC = () => {
     return () => clearInterval(intervalId);
   }, [dispatch]);
 
+  const getWeight = (score: number): string => {
+    if (score === 0) {
+      return "font-black";
+    } else if (score === 1) {
+      return "font-bold";
+    } else if (score === 2) {
+      return "font-semibold";
+    } else {
+      return "font-normal";
+    }
+  };
+
   return (
     <>
       {topScores?.length === 0 ? (
-        <div className="text-center text-4xl font-bold p-5 bg-slate-100/80 rounded-lg shadow-lg text-blue-400 pb-6 select-none">No players found</div>
+        <div className="text-center text-4xl font-bold p-5 bg-slate-100/80 rounded-lg shadow-lg text-blue-400 pb-6 select-none">
+          No players found
+        </div>
       ) : (
         <div className="w-[360px] md:w-[600px] p-4 bg-slate-100/80 rounded-lg shadow-lg select-none">
           <h2 className="text-3xl text-center font-extrabold text-blue-400">
@@ -40,11 +55,23 @@ const PlayerStats: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {topScores?.map((player: any, index: number) => (
-                <tr key={player.id} 
-                className={repeatedIds.includes(player.id.toString()) ? '' : 'bg-green-200'}
+              {topScores.map((player: Stat, index: number) => (
+                <tr
+                  key={player.id}
+                  className={
+                    repeatedIds.includes(player.id.toString())
+                      ? ""
+                      : "bg-green-200"
+                  }
                 >
-                  <td className="border px-4 py-2">{index + 1}</td>
+                  <td className="border px-4 py-2 flex justify-around font">
+                    <span className={getWeight(index)}>{index + 1} </span>
+                    <img
+                      src={player.profileImage}
+                      alt={`profileImage-${player.nickname}`}
+                      className="w-8 h-8 rounded-full"
+                    />{" "}
+                  </td>
                   <td className="border px-4 py-2">{player.nickname}</td>
                   <td className="border px-4 py-2">{player.score}</td>
                 </tr>
